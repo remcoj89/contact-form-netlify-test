@@ -20,3 +20,27 @@ import Layout from "../layouts/Layout.astro";
     </p>
   </form>
 </Layout>
+
+<script>
+  const handleSubmit = (event: Event) => {
+    event.preventDefault();
+
+    console.log("form submited")
+
+    const myForm = event.target as HTMLFormElement;
+    const formData = new FormData(myForm);
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData).toString(),
+    })
+      .then(() => console.log("Form successfully submitted"))
+      .catch((error) => alert(error));
+  };
+
+  const form = document.querySelector("form");
+  if (form) {
+    form.addEventListener("submit", handleSubmit);
+  }
+</script>
